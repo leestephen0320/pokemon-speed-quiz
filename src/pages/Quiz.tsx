@@ -135,27 +135,29 @@ function Quiz() {
             />
           </div>
 
-          {revealed && (
-            <div className="quiz-result">
-              <p
-                className={`quiz-result-message ${
-                  pickedCorrectly ? 'result-correct' : 'result-incorrect'
-                }`}
-              >
-                {isTie
-                  ? pickedCorrectly
-                    ? "Correct — it's a tie!"
-                    : "Not quite — it's actually a tie!"
-                  : pickedCorrectly
-                  ? 'Correct!'
-                  : 'Not quite!'}
-              </p>
+          <div className={`quiz-result ${revealed ? 'quiz-result-visible' : ''}`}>
+            {revealed && (
+              <>
+                <p
+                  className={`quiz-result-message ${
+                    pickedCorrectly ? 'result-correct' : 'result-incorrect'
+                  }`}
+                >
+                  {isTie
+                    ? pickedCorrectly
+                      ? "Correct! It's a tie!"
+                      : "Wrong! It's actually a tie!"
+                    : pickedCorrectly
+                    ? 'Correct!'
+                    : 'WRONG!'}
+                </p>
 
-              <button type="button" onClick={loadNewRound} className="btn btn-primary btn-lg">
-                Next Pokémon
-              </button>
-            </div>
-          )}
+                <button type="button" onClick={loadNewRound} className="btn btn-primary btn-lg">
+                  Next Pokémon
+                </button>
+              </>
+            )}
+          </div>
         </>
       )}
     </div>
