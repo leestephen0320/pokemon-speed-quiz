@@ -77,7 +77,7 @@ function Quiz() {
       <div className="quiz-header">
         <h1 className="quiz-title">Who's Faster?</h1>
         <p className="quiz-subtitle">
-          Pick the Pokémon with the higher base Speed stat — or call a tie.
+          Pick the Pokémon with the higher base Speed stat, unless it is a tie.
         </p>
       </div>
 
