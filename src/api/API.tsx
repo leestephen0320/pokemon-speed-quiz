@@ -41,7 +41,7 @@ export async function fetchPokemon(slug: string): Promise<Pokemon> {
  * and fetches both from PokéAPI in parallel.
  */
 export async function getRandomPokemonPair(): Promise<[Pokemon, Pokemon]> {
-  const [slugA, slugB] = pickTwoDistinctSlugs();
+  const [slugA, slugB] = pickTwoDistinctSlugs(championsList);
   const [pokemonA, pokemonB] = await Promise.all([
     fetchPokemon(slugA),
     fetchPokemon(slugB),
@@ -49,13 +49,74 @@ export async function getRandomPokemonPair(): Promise<[Pokemon, Pokemon]> {
   return [pokemonA, pokemonB];
 }
 
-function pickTwoDistinctSlugs(): [string, string] {
-  const firstIndex = Math.floor(Math.random() * championsList.length);
-  let secondIndex = Math.floor(Math.random() * championsList.length);
+/**
+ * Picks two distinct random Pokémon whose base Speed falls within
+ * [minSpeed, maxSpeed] (inclusive). Since speed isn't known ahead of
+ * fetching, this samples random slugs from the Champions list in small
+ * parallel batches, checking each one's actual speed, until two matches
+ * are found (or the attempt budget runs out).
+ */
+export async function getRandomPokemonPairInRange(
+  minSpeed: number,
+  maxSpeed: number,
+  maxAttempts = 80,
+  batchSize = 8
+): Promise<[Pokemon, Pokemon]> {
+  const candidates = shuffle(championsList);
+  const matches: Pokemon[] = [];
+  let attempts = 0;
+  let index = 0;
 
-  while (secondIndex === firstIndex) {
-    secondIndex = Math.floor(Math.random() * championsList.length);
+  while (
+    matches.length < 2 &&
+    index < candidates.length &&
+    attempts < maxAttempts
+  ) {
+    const batch = candidates.slice(index, index + batchSize);
+    index += batch.length;
+    attempts += batch.length;
+
+    const results = await Promise.allSettled(batch.map(fetchPokemon));
+
+    for (const result of results) {
+      if (
+        result.status === 'fulfilled' &&
+        result.value.speed >= minSpeed &&
+        result.value.speed <= maxSpeed
+      ) {
+        matches.push(result.value);
+        if (matches.length >= 2) break;
+      }
+    }
   }
 
-  return [championsList[firstIndex], championsList[secondIndex]];
+  if (matches.length < 2) {
+    throw new Error(
+      `Couldn't find two Pokémon with Speed between ${minSpeed} and ${
+        maxSpeed === Infinity ? '∞' : maxSpeed
+      }. Try again.`
+    );
+  }
+
+  return [matches[0], matches[1]];
+}
+
+function pickTwoDistinctSlugs(list: string[]): [string, string] {
+  const firstIndex = Math.floor(Math.random() * list.length);
+  let secondIndex = Math.floor(Math.random() * list.length);
+
+  while (secondIndex === firstIndex) {
+    secondIndex = Math.floor(Math.random() * list.length);
+  }
+
+  return [list[firstIndex], list[secondIndex]];
+}
+
+function shuffle<T>(array: T[]): T[] {
+  const copy = [...array];
+  for (let i = copy.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [copy[i], copy[j]] = [copy[j], copy[i]];
+  }
+  return copy;
 }
