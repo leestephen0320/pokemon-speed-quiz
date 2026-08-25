@@ -6,8 +6,8 @@ const fetchMidTierPair = () => getRandomPokemonPairInRange(60, 110);
 function MidTierQuiz() {
   return (
     <QuizGame
-      title="Mid Tier"
-      subtitle="Both Pokémon have a base Speed between 60 and 110."
+      title="Middling Midterm"
+      subtitle="Are they trickroom or tailwind?"
       fetchPair={fetchMidTierPair}
     />
   );

@@ -5,7 +5,7 @@ function Quiz() {
   return (
     <QuizGame
       title="Who's Faster?"
-      subtitle="Pick the Pokémon with the higher base Speed stat — or call a tie. Any Pokémon Champions Pokémon is fair game."
+      subtitle="Pick the Pokémon with the higher base Speed stat or call a tie. Every Pokémon Champion is fair game."
       fetchPair={getRandomPokemonPair}
     />
   );

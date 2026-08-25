@@ -6,8 +6,8 @@ const fetchSlowTierPair = () => getRandomPokemonPairInRange(0, 70);
 function SlowTierQuiz() {
   return (
     <QuizGame
-      title="Slow Tier"
-      subtitle="Both Pokémon have a base Speed of 70 or lower."
+      title="Trickroom Test"
+      subtitle="May the slowest win the trickroom."
       fetchPair={fetchSlowTierPair}
     />
   );

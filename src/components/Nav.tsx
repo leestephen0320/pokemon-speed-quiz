@@ -16,7 +16,7 @@ function Nav() {
             }
             end
           >
-            All Pokémon
+            Every Pokémon Exam
           </NavLink>
           <NavLink
             to="/slow-tier"
@@ -24,7 +24,7 @@ function Nav() {
               `nav-link${isActive ? ' nav-link-active' : ''}`
             }
           >
-            Slow Tier
+            Trickroom Test
           </NavLink>
           <NavLink
             to="/mid-tier"
@@ -32,7 +32,7 @@ function Nav() {
               `nav-link${isActive ? ' nav-link-active' : ''}`
             }
           >
-            Mid Tier
+            Middling Midterm
           </NavLink>
           <NavLink
             to="/fast-tier"
@@ -40,7 +40,7 @@ function Nav() {
               `nav-link${isActive ? ' nav-link-active' : ''}`
             }
           >
-            Fast Tier
+            Fast Finals
           </NavLink>
         </nav>
       </div>

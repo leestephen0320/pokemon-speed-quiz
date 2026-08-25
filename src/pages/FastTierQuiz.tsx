@@ -6,8 +6,8 @@ const fetchFastTierPair = () => getRandomPokemonPairInRange(100, Infinity);
 function FastTierQuiz() {
   return (
     <QuizGame
-      title="Fast Tier"
-      subtitle="Both Pokémon have a base Speed of 100 or higher."
+      title="Fast Finals"
+      subtitle="Who is really the fastest?"
       fetchPair={fetchFastTierPair}
     />
   );
