@@ -7,7 +7,7 @@ function SlowTierQuiz() {
   return (
     <QuizGame
       title="Trickroom Test"
-      subtitle="May the slowest win the trickroom."
+      subtitle="Which is the fastest of these trickroom merchants?"
       fetchPair={fetchSlowTierPair}
     />
   );

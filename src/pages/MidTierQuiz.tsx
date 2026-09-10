@@ -7,7 +7,7 @@ function MidTierQuiz() {
   return (
     <QuizGame
       title="Middling Midterm"
-      subtitle="Are they trickroom or tailwind?"
+      subtitle="Who is faster among these seemingly average speedsters?"
       fetchPair={fetchMidTierPair}
     />
   );
